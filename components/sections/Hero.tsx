@@ -263,9 +263,9 @@ const Hero: React.FC = () => {
           </div>
 
           {/* Content of Mock UI */}
-          <div className="flex flex-col md:flex-row h-[500px]">
+          <div className="flex flex-col md:flex-row h-auto md:h-[500px]">
             {/* Left: Video Feed */}
-            <div className="flex-1 bg-slate-950 relative p-4 flex items-center justify-center border-r border-slate-800 overflow-hidden">
+            <div className="w-full h-[350px] md:h-auto md:flex-1 bg-slate-950 relative p-2 md:p-4 flex items-center justify-center md:border-r border-slate-800 overflow-hidden">
               <div className="relative w-full h-full rounded-lg bg-slate-900 overflow-hidden group border border-slate-800/50">
 
                 {/* Video Element */}
@@ -288,19 +288,20 @@ const Hero: React.FC = () => {
 
                     <button
                       onClick={startDemo}
-                      className="group relative z-20 flex flex-col items-center gap-4 transition-transform hover:scale-105 active:scale-95"
+                      className="group relative z-20 flex flex-col items-center gap-2 md:gap-4 transition-transform hover:scale-105 active:scale-95"
                     >
-                      <div className="w-20 h-20 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center shadow-[0_0_40px_rgba(99,102,241,0.4)] group-hover:shadow-[0_0_60px_rgba(99,102,241,0.6)] transition-shadow duration-300 border border-white/20">
-                        <ScanFace size={32} className="text-white" />
+                      <div className="w-16 h-16 md:w-20 md:h-20 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center shadow-[0_0_40px_rgba(99,102,241,0.4)] group-hover:shadow-[0_0_60px_rgba(99,102,241,0.6)] transition-shadow duration-300 border border-white/20">
+                        <ScanFace size={28} className="md:size-8 text-white" />
                       </div>
-                      <div className="text-center">
-                        <span className="block text-lg font-bold text-white">Enable Camera</span>
-                        <span className="text-sm text-slate-400">to try live analysis</span>
+                      <div className="text-center px-2">
+                        <span className="block text-base md:text-lg font-bold text-white">Enable Camera</span>
+                        <span className="text-xs md:text-sm text-slate-400">to try live analysis</span>
                       </div>
                     </button>
-                    <div className="absolute bottom-8 text-xs text-slate-500 flex items-center gap-1.5">
+                    <div className="absolute bottom-4 md:bottom-8 text-[10px] md:text-xs text-slate-500 flex items-center gap-1.5 px-2">
                       <Lock size={10} />
-                      Video is processed locally in browser. No data saved.
+                      <span className="hidden sm:inline">Video is processed locally in browser. No data saved.</span>
+                      <span className="sm:hidden">Processed locally. No data saved.</span>
                     </div>
                   </div>
                 )}
@@ -398,17 +399,31 @@ const Hero: React.FC = () => {
                   <div className="w-1.5 h-1.5 rounded-full bg-slate-500"></div>
                   Transcript
                 </h3>
-                <div className="flex-1 bg-slate-950/30 rounded-lg p-3 text-xs text-slate-400 font-mono leading-relaxed overflow-y-auto border border-slate-800/50 scrollbar-thin scrollbar-thumb-slate-800">
-                  <p className="mb-3 opacity-90">
-                    <span className="text-indigo-400 font-bold">Candidate:</span> So, regarding the scalability issue, I would implement a <span className="text-indigo-100 bg-indigo-500/20 px-1 py-0.5 rounded border border-indigo-500/30">load balancer</span> to distribute traffic...
-                  </p>
-                  <motion.p
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 1 }}
-                  >
-                    <span className="text-teal-400 font-bold">AI Note:</span> Good use of technical terminology. Consider elaborating on the specific algorithm.
-                  </motion.p>
+                <div className="flex-1 bg-slate-950/30 rounded-lg p-3 text-xs text-slate-400 font-mono leading-relaxed overflow-y-auto border border-slate-800/50 scrollbar-thin scrollbar-thumb-slate-800 relative">
+                  {!isLive && (
+                    <div className="absolute inset-0 flex items-center justify-center text-slate-600 italic">
+                      Start camera to analyze speech...
+                    </div>
+                  )}
+                  {isLive && (
+                    <>
+                      <motion.p
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ delay: 1.5 }}
+                        className="mb-3 opacity-90"
+                      >
+                        <span className="text-indigo-400 font-bold">Candidate:</span> So, regarding the scalability issue, I would implement a <span className="text-indigo-100 bg-indigo-500/20 px-1 py-0.5 rounded border border-indigo-500/30">load balancer</span> to distribute traffic...
+                      </motion.p>
+                      <motion.p
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ delay: 3.5 }}
+                      >
+                        <span className="text-teal-400 font-bold">AI Note:</span> Good use of technical terminology. Consider elaborating on the specific algorithm.
+                      </motion.p>
+                    </>
+                  )}
                 </div>
               </div>
             </div>

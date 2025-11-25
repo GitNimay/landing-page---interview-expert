@@ -57,7 +57,7 @@ const Navbar: React.FC = () => {
 
           {/* CTAs */}
           <div className="hidden md:flex items-center gap-4">
-            <a href="#" className="text-sm font-medium text-slate-300 hover:text-white">Log in</a>
+            <a href="https://interviewxpert-ai.netlify.app/" className="text-sm font-medium text-slate-300 hover:text-white">Log in</a>
             <MagnetButton variant="primary" className="!px-4 !py-2 !text-sm">
               Get Started
             </MagnetButton>
@@ -93,7 +93,7 @@ const Navbar: React.FC = () => {
               </a>
             ))}
             <div className="h-px bg-slate-800 my-4" />
-            <a href="#" className="text-xl font-medium text-slate-400">Log in</a>
+            <a href="https://interviewxpert-ai.netlify.app/" className="text-xl font-medium text-slate-400">Log in</a>
             <MagnetButton variant="primary" className="w-full justify-center">
               Get Started
             </MagnetButton>
