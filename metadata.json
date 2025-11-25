@@ -1,0 +1,7 @@
+{
+  "name": "Interview Expert",
+  "description": "Real-time AI Interview Copilot & Evaluation Platform landing page.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}
