@@ -2,6 +2,8 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { User, Users, Check } from 'lucide-react';
 import FadeIn from '../ui/FadeIn';
+import { Cover } from '../ui/Cover';
+import { TextReveal } from '../ui/TextReveal';
 
 const WhoItsFor: React.FC = () => {
   return (
@@ -9,7 +11,9 @@ const WhoItsFor: React.FC = () => {
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
           <FadeIn>
-            <h2 className="text-3xl md:text-5xl font-display font-bold text-white mb-4">Built for candidates and hiring teams</h2>
+            <h2 className="text-2xl md:text-5xl font-display font-bold text-white mb-4 flex justify-center items-center gap-2 flex-wrap">
+              Built for <Cover className="bg-clip-text text-transparent bg-gradient-to-r from-indigo-500 to-teal-500">candidates</Cover> and <Cover className="bg-clip-text text-transparent bg-gradient-to-r from-teal-500 to-indigo-500">hiring teams</Cover>
+            </h2>
           </FadeIn>
           <FadeIn delay={0.2}>
             <p className="text-slate-400 max-w-2xl mx-auto">Whether you're practicing for your dream job or evaluating the next top talent, Interview Expert bridges the gap.</p>

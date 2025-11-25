@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Video, Brain, FileText, ArrowRight, ArrowDown } from 'lucide-react';
 import FadeIn from '../ui/FadeIn';
+import { GlowingEffect } from '../ui/glowing-effect';
 
 const HowItWorks: React.FC = () => {
   const steps = [
@@ -41,12 +42,21 @@ const HowItWorks: React.FC = () => {
           {steps.map((step, index) => (
             <FadeIn key={index} delay={index * 0.2} className="relative">
               <div className="relative z-10 h-full group">
-                <div className="bg-slate-900/50 border border-slate-800 rounded-2xl p-8 h-full hover:border-indigo-500/50 hover:shadow-lg hover:shadow-indigo-500/20 transition-all duration-300 hover:scale-[1.02]">
-                  <div className="w-16 h-16 rounded-full bg-slate-800 flex items-center justify-center text-indigo-400 mb-6 group-hover:scale-110 transition-transform duration-300 group-hover:bg-indigo-500/20 shadow-lg shadow-indigo-500/5">
-                    {step.icon}
+                <div className="relative h-full rounded-2xl border border-slate-800 bg-slate-900/50 p-8 overflow-hidden">
+                  <GlowingEffect
+                    spread={40}
+                    glow={true}
+                    disabled={false}
+                    proximity={64}
+                    inactiveZone={0.01}
+                  />
+                  <div className="relative z-10">
+                    <div className="w-16 h-16 rounded-full bg-slate-800 flex items-center justify-center text-indigo-400 mb-6 group-hover:scale-110 transition-transform duration-300 group-hover:bg-indigo-500/20 shadow-lg shadow-indigo-500/5">
+                      {step.icon}
+                    </div>
+                    <h3 className="text-xl font-bold text-white mb-3">{step.title}</h3>
+                    <p className="text-slate-400 leading-relaxed">{step.description}</p>
                   </div>
-                  <h3 className="text-xl font-bold text-white mb-3">{step.title}</h3>
-                  <p className="text-slate-400 leading-relaxed">{step.description}</p>
                 </div>
               </div>
 

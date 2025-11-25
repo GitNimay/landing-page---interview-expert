@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import MagnetButton from '../ui/MagnetButton';
 import FadeIn from '../ui/FadeIn';
+import { BackgroundBeams } from '../ui/BackgroundBeams';
 
 const FinalCTA: React.FC = () => {
   return (
@@ -32,6 +33,7 @@ const FinalCTA: React.FC = () => {
           </div>
         </FadeIn>
       </div>
+      <BackgroundBeams />
     </section>
   );
 };

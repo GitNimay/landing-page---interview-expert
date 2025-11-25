@@ -10,11 +10,13 @@ import FAQ from './components/sections/FAQ';
 import FinalCTA from './components/sections/FinalCTA';
 import Footer from './components/Footer';
 import NeuralBackground from './components/ui/NeuralBackground';
+import CustomCursor from './components/ui/CustomCursor';
 
 const App: React.FC = () => {
   return (
     <div className="relative min-h-screen bg-slate-950 text-slate-50 overflow-x-hidden selection:bg-indigo-500/30 selection:text-indigo-200">
       <NeuralBackground />
+      <CustomCursor />
       <div className="relative z-10">
         <Navbar />
         <main>

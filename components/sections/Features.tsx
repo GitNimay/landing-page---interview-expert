@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Activity, BarChart3, MessageSquareText, FileText, LineChart, Users, Brain, ShieldCheck } from 'lucide-react';
 import FadeIn from '../ui/FadeIn';
+import { SparklesText } from '../ui/SparklesText';
 
 const cn = (...classes: (string | undefined | null | false)[]) => {
   return classes.filter(Boolean).join(" ");
@@ -101,7 +102,10 @@ const Features: React.FC = () => {
       <div className="container mx-auto px-4 relative z-10">
         <div className="text-center mb-16">
           <FadeIn>
-            <h2 className="text-3xl md:text-5xl font-display font-bold text-white mb-4">Everything you need to master the interview</h2>
+            <SparklesText
+              text="Everything you need to master the interview"
+              className="text-2xl md:text-5xl font-display font-bold text-white mb-4"
+            />
           </FadeIn>
           <FadeIn delay={0.2}>
             <p className="text-slate-400 max-w-2xl mx-auto">Our AI-powered platform provides comprehensive tools to help you prepare, practice, and perfect your interview skills.</p>
