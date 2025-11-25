@@ -4,6 +4,8 @@ import { PlayCircle, Brain, ScanFace, Lock } from 'lucide-react';
 import MagnetButton from '../ui/MagnetButton';
 import { GlowingEffect } from '../ui/glowing-effect';
 import FadeIn from '../ui/FadeIn';
+import { Spotlight } from '../ui/Spotlight';
+import { TextReveal } from '../ui/TextReveal';
 
 const Hero: React.FC = () => {
   const [isLive, setIsLive] = useState(false);
@@ -106,7 +108,12 @@ const Hero: React.FC = () => {
   };
 
   return (
-    <div className="relative min-h-screen pt-24 pb-16 flex flex-col items-center justify-center">
+    <div className="relative min-h-screen pt-24 pb-16 flex flex-col items-center justify-center overflow-hidden">
+      <Spotlight
+        className="-top-40 left-0 md:left-60 md:-top-20"
+        fill="white"
+      />
+
       <div className="container mx-auto px-4 flex flex-col items-center relative z-20">
 
         {/* Badge */}
@@ -118,9 +125,10 @@ const Hero: React.FC = () => {
         </FadeIn>
 
         {/* Headlines */}
-        <FadeIn delay={0.3}>
-          <h1 className="text-4xl md:text-7xl font-display font-bold text-center text-white leading-tight max-w-4xl mx-auto mb-6">
-            Ace every interview with <br />
+        <div className="text-center mb-6 max-w-4xl mx-auto">
+          <h1 className="text-4xl md:text-7xl font-display font-bold text-white leading-tight">
+            <TextReveal text="Ace every interview with" className="justify-center" />
+            <br />
             <span
               className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-purple-400 to-teal-400 animate-gradient inline-block"
               style={{ WebkitBackgroundClip: 'text', backgroundClip: 'text' }}
@@ -128,7 +136,7 @@ const Hero: React.FC = () => {
               real-time AI feedback
             </span>
           </h1>
-        </FadeIn>
+        </div>
 
         {/* CTAs */}
         <FadeIn delay={0.5}>

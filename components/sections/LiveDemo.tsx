@@ -2,14 +2,16 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Play, Pause, RotateCcw, Volume2, VolumeX, Maximize2, CheckCircle2, AlertCircle } from 'lucide-react';
 import FadeIn from '../ui/FadeIn';
+import { BackgroundBeams } from '../ui/BackgroundBeams';
 
 const LiveDemo: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'candidate' | 'recruiter'>('candidate');
   const [isPlaying, setIsPlaying] = useState(false);
 
   return (
-    <section className="py-24 bg-gradient-to-b from-transparent to-slate-900/50">
-      <div className="container mx-auto px-4">
+    <section className="py-24 bg-gradient-to-b from-transparent to-slate-900/50 relative">
+      <BackgroundBeams className="absolute inset-0 opacity-30" />
+      <div className="container mx-auto px-4 relative z-10">
         <div className="text-center mb-16">
           <FadeIn>
             <h2 className="text-3xl md:text-5xl font-display font-bold text-white mb-4">See it in action</h2>

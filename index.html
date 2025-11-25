@@ -1,78 +1,96 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Interview Expert | AI Interview Copilot</title>
-    <meta name="description" content="Real-time AI Interview Copilot & Evaluation Platform" />
-    <link rel="icon" type="image/png" href="/logo.png" />
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
-    <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            fontFamily: {
-              sans: ['Inter', 'sans-serif'],
-              display: ['Plus Jakarta Sans', 'sans-serif'],
-            },
-            colors: {
-              background: '#020617', // Slate 950
-              surface: '#0f172a', // Slate 900
-              primary: '#6366f1', // Indigo 500
-              secondary: '#14b8a6', // Teal 500
-              accent: '#8b5cf6', // Violet 500
-            },
-            animation: {
-              aurora: "aurora 60s linear infinite",
-              gradient: "gradient 8s linear infinite",
-            },
-            keyframes: {
-              aurora: {
-                from: {
-                  backgroundPosition: "50% 50%, 50% 50%",
-                },
-                to: {
-                  backgroundPosition: "350% 50%, 350% 50%",
-                },
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Interview Expert | AI Interview Copilot</title>
+  <meta name="description" content="Real-time AI Interview Copilot & Evaluation Platform" />
+  <link rel="icon" type="image/png" href="/logo.png" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap"
+    rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            display: ['Plus Jakarta Sans', 'sans-serif'],
+          },
+          colors: {
+            background: '#020617', // Slate 950
+            surface: '#0f172a', // Slate 900
+            primary: '#6366f1', // Indigo 500
+            secondary: '#14b8a6', // Teal 500
+            accent: '#8b5cf6', // Violet 500
+          },
+          animation: {
+            aurora: "aurora 60s linear infinite",
+            gradient: "gradient 8s linear infinite",
+            spotlight: "spotlight 2s ease .75s 1 forwards",
+          },
+          keyframes: {
+            aurora: {
+              from: {
+                backgroundPosition: "50% 50%, 50% 50%",
               },
-              gradient: {
-                "0%, 100%": {
-                  "background-size": "200% 200%",
-                  "background-position": "left center"
-                },
-                "50%": {
-                  "background-size": "200% 200%",
-                  "background-position": "right center"
-                }
+              to: {
+                backgroundPosition: "350% 50%, 350% 50%",
+              },
+            },
+            gradient: {
+              "0%, 100%": {
+                "background-size": "200% 200%",
+                "background-position": "left center"
+              },
+              "50%": {
+                "background-size": "200% 200%",
+                "background-position": "right center"
               }
+            },
+            spotlight: {
+              "0%": {
+                opacity: 0,
+                transform: "translate(-72%, -62%) scale(0.5)",
+              },
+              "100%": {
+                opacity: 1,
+                transform: "translate(-50%,-40%) scale(1)",
+              },
             },
           },
         },
-      }
-    </script>
-    <style>
-      body {
-        background-color: #020617;
-        color: #f8fafc;
-      }
-      /* Custom scrollbar */
-      ::-webkit-scrollbar {
-        width: 8px;
-      }
-      ::-webkit-scrollbar-track {
-        background: #020617;
-      }
-      ::-webkit-scrollbar-thumb {
-        background: #334155;
-        border-radius: 4px;
-      }
-      ::-webkit-scrollbar-thumb:hover {
-        background: #475569;
-      }
-    </style>
+      },
+    }
+  </script>
+  <style>
+    body {
+      background-color: #020617;
+      color: #f8fafc;
+    }
+
+    /* Custom scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: #020617;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #334155;
+      border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: #475569;
+    }
+  </style>
   <script type="importmap">
 {
   "imports": {
@@ -84,10 +102,12 @@
   }
 }
 </script>
-<link rel="stylesheet" href="/index.css">
+  <link rel="stylesheet" href="/index.css">
 </head>
-  <body>
-    <div id="root"></div>
+
+<body>
+  <div id="root"></div>
   <script type="module" src="/index.tsx"></script>
 </body>
+
 </html>

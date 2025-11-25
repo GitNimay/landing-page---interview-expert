@@ -40,8 +40,8 @@ const HowItWorks: React.FC = () => {
         <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
           {steps.map((step, index) => (
             <FadeIn key={index} delay={index * 0.2} className="relative">
-              <div className="relative z-10 h-full">
-                <div className="bg-slate-900/50 border border-slate-800 rounded-2xl p-8 h-full hover:border-indigo-500/30 transition-colors group">
+              <div className="relative z-10 h-full group">
+                <div className="bg-slate-900/50 border border-slate-800 rounded-2xl p-8 h-full hover:border-indigo-500/50 hover:shadow-lg hover:shadow-indigo-500/20 transition-all duration-300 hover:scale-[1.02]">
                   <div className="w-16 h-16 rounded-full bg-slate-800 flex items-center justify-center text-indigo-400 mb-6 group-hover:scale-110 transition-transform duration-300 group-hover:bg-indigo-500/20 shadow-lg shadow-indigo-500/5">
                     {step.icon}
                   </div>
