@@ -127,26 +127,110 @@ const Hero: React.FC = () => {
         {/* Headlines */}
         <div className="text-center mb-6 max-w-4xl mx-auto">
           <h1 className="text-4xl md:text-7xl font-display font-bold text-white leading-tight">
-            <TextReveal text="Ace every interview with" className="justify-center" />
-            <br />
-            <span
-              className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-purple-400 to-teal-400 animate-gradient inline-block"
-              style={{ WebkitBackgroundClip: 'text', backgroundClip: 'text' }}
+            {/* Animated text with character reveal */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.5 }}
+              className="inline-block"
             >
-              real-time AI feedback
-            </span>
+              {"Ace every interview with".split("").map((char, index) => (
+                <motion.span
+                  key={index}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{
+                    duration: 0.5,
+                    delay: index * 0.03,
+                    ease: "easeOut"
+                  }}
+                  className="inline-block"
+                  style={{ display: char === " " ? "inline" : "inline-block" }}
+                >
+                  {char === " " ? "\u00A0" : char}
+                </motion.span>
+              ))}
+            </motion.div>
+            <br />
+            {/* Gradient text with multiple animations */}
+            <motion.span
+              initial={{ opacity: 0, y: 20 }}
+              animate={{
+                opacity: 1,
+                y: [0, -5, 0],
+              }}
+              transition={{
+                opacity: { duration: 0.5, delay: 0.6 },
+                y: {
+                  duration: 3,
+                  repeat: Infinity,
+                  repeatType: "reverse",
+                  ease: "easeInOut",
+                  delay: 1
+                }
+              }}
+              className="relative inline-block"
+            >
+              <span
+                className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-purple-400 to-teal-400 inline-block relative"
+                style={{
+                  WebkitBackgroundClip: 'text',
+                  backgroundClip: 'text',
+                  backgroundSize: '200% 200%',
+                  animation: 'gradient 4s ease infinite'
+                }}
+              >
+                real-time AI feedback
+                {/* Shimmer effect overlay */}
+                <motion.span
+                  className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-0"
+                  style={{
+                    backgroundSize: '200% 100%',
+                    WebkitBackgroundClip: 'text',
+                    backgroundClip: 'text',
+                  }}
+                  animate={{
+                    opacity: [0, 0.3, 0],
+                    backgroundPosition: ['-200% 0', '200% 0'],
+                  }}
+                  transition={{
+                    duration: 2.5,
+                    repeat: Infinity,
+                    repeatDelay: 1.5,
+                    ease: "easeInOut"
+                  }}
+                >
+                  real-time AI feedback
+                </motion.span>
+              </span>
+              {/* Glow effect */}
+              <motion.span
+                className="absolute inset-0 blur-2xl opacity-40"
+                style={{
+                  background: 'linear-gradient(to right, rgb(129, 140, 248), rgb(192, 132, 252), rgb(45, 212, 191))',
+                  filter: 'blur(40px)',
+                  zIndex: -1,
+                }}
+                animate={{
+                  opacity: [0.2, 0.5, 0.2],
+                  scale: [0.95, 1.05, 0.95],
+                }}
+                transition={{
+                  duration: 3,
+                  repeat: Infinity,
+                  repeatType: "reverse",
+                  ease: "easeInOut"
+                }}
+              />
+            </motion.span>
           </h1>
         </div>
 
         {/* CTAs */}
         <FadeIn delay={0.5}>
-          <div className="flex flex-col sm:flex-row items-center gap-4 mb-16">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
             <MagnetButton variant="primary">
               Start Free Trial
-            </MagnetButton>
-            <MagnetButton variant="secondary">
-              <PlayCircle size={18} />
-              Watch 2-min Demo
             </MagnetButton>
           </div>
         </FadeIn>
