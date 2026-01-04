@@ -6,11 +6,13 @@ import { GlowingEffect } from '../ui/glowing-effect';
 import FadeIn from '../ui/FadeIn';
 import { Spotlight } from '../ui/Spotlight';
 import { TextReveal } from '../ui/TextReveal';
+import { useTheme } from '../ThemeContext';
 
 const Hero: React.FC = () => {
   const [isLive, setIsLive] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
   const streamRef = useRef<MediaStream | null>(null);
+  const { isDark } = useTheme();
 
   // Simulation State
   const [metrics, setMetrics] = useState({
@@ -134,14 +136,14 @@ const Hero: React.FC = () => {
     <div className="relative min-h-screen pt-24 pb-16 flex flex-col items-center justify-center overflow-hidden">
       <Spotlight
         className="-top-40 left-0 md:left-60 md:-top-20"
-        fill="white"
+        fill={isDark ? "white" : "rgba(99, 102, 241, 0.15)"}
       />
 
       <div className="container mx-auto px-4 flex flex-col items-center relative z-20">
 
         {/* Badge */}
         <FadeIn delay={0.2}>
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-800/50 border border-slate-700/50 text-xs font-medium text-indigo-300 mb-6 backdrop-blur-sm">
+          <div className={`inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium mb-6 backdrop-blur-sm ${isDark ? 'bg-slate-800/50 border border-slate-700/50 text-indigo-300' : 'bg-indigo-50 border border-indigo-200 text-indigo-600'}`}>
             <span className="w-2 h-2 rounded-full bg-indigo-500 animate-pulse" />
             For Candidates & Hiring Teams
           </div>
@@ -149,7 +151,7 @@ const Hero: React.FC = () => {
 
         {/* Headlines */}
         <div className="text-center mb-6 max-w-4xl mx-auto">
-          <h1 className="text-4xl md:text-7xl font-display font-bold text-white leading-tight">
+          <h1 className={`text-4xl md:text-7xl font-display font-bold leading-tight ${isDark ? 'text-white' : 'text-slate-900'}`}>
             {/* Animated text with character reveal */}
             <motion.div
               initial={{ opacity: 0 }}
@@ -270,7 +272,7 @@ const Hero: React.FC = () => {
           }}
           onMouseMove={handleMouseMove}
           onMouseLeave={handleMouseLeave}
-          className="w-full max-w-5xl rounded-xl border border-slate-800 bg-slate-900/80 backdrop-blur-xl shadow-2xl shadow-indigo-500/10 overflow-hidden relative perspective-1000"
+          className={`w-full max-w-5xl rounded-xl border backdrop-blur-xl shadow-2xl overflow-hidden relative perspective-1000 ${isDark ? 'border-slate-800 bg-slate-900/80 shadow-indigo-500/10' : 'border-slate-200 bg-white/90 shadow-slate-300/30'}`}
         >
           <GlowingEffect
             spread={40}
@@ -280,14 +282,14 @@ const Hero: React.FC = () => {
             inactiveZone={0.01}
           />
           {/* Header of Mock UI */}
-          <div className="h-10 border-b border-slate-800 flex items-center px-4 gap-2 bg-slate-950/50">
+          <div className={`h-10 border-b flex items-center px-4 gap-2 ${isDark ? 'border-slate-800 bg-slate-950/50' : 'border-slate-200 bg-slate-100/80'}`}>
             <div className="flex gap-1.5">
               <div className="w-3 h-3 rounded-full bg-red-500/20 border border-red-500/50" />
               <div className="w-3 h-3 rounded-full bg-yellow-500/20 border border-yellow-500/50" />
               <div className="w-3 h-3 rounded-full bg-green-500/20 border border-green-500/50" />
             </div>
-            <div className="ml-4 px-3 py-0.5 rounded-full bg-slate-800 text-[10px] text-slate-400 font-mono flex items-center gap-2">
-              <div className={`w-1.5 h-1.5 rounded-full ${isLive ? 'bg-red-500 animate-pulse' : 'bg-slate-500'}`} />
+            <div className={`ml-4 px-3 py-0.5 rounded-full text-[10px] font-mono flex items-center gap-2 ${isDark ? 'bg-slate-800 text-slate-400' : 'bg-slate-200 text-slate-600'}`}>
+              <div className={`w-1.5 h-1.5 rounded-full ${isLive ? 'bg-red-500 animate-pulse' : isDark ? 'bg-slate-500' : 'bg-slate-400'}`} />
               {isLive ? 'LIVE ANALYSIS • 00:00:12' : 'READY TO START'}
             </div>
           </div>
@@ -295,8 +297,8 @@ const Hero: React.FC = () => {
           {/* Content of Mock UI */}
           <div className="flex flex-col md:flex-row h-auto md:h-[500px]">
             {/* Left: Video Feed */}
-            <div className="w-full h-[350px] md:h-auto md:flex-1 bg-slate-950 relative p-2 md:p-4 flex items-center justify-center md:border-r border-slate-800 overflow-hidden">
-              <div className="relative w-full h-full rounded-lg bg-slate-900 overflow-hidden group border border-slate-800/50">
+            <div className={`w-full h-[350px] md:h-auto md:flex-1 relative p-2 md:p-4 flex items-center justify-center md:border-r overflow-hidden ${isDark ? 'bg-slate-950 border-slate-800' : 'bg-slate-100 border-slate-200'}`}>
+              <div className={`relative w-full h-full rounded-lg overflow-hidden group border ${isDark ? 'bg-slate-900 border-slate-800/50' : 'bg-slate-50 border-slate-200'}`}>
 
                 {/* Video Element */}
                 <video
@@ -309,10 +311,12 @@ const Hero: React.FC = () => {
 
                 {/* Placeholder / Start Button */}
                 {!isLive && (
-                  <div className="absolute inset-0 flex flex-col items-center justify-center bg-slate-900 z-10">
+                  <div className={`absolute inset-0 flex flex-col items-center justify-center z-10 ${isDark ? 'bg-slate-900' : 'bg-slate-50'}`}>
                     <div className="absolute inset-0 bg-gradient-to-tr from-indigo-500/10 to-purple-500/10 opacity-50" />
                     <div className="absolute inset-0" style={{
-                      backgroundImage: 'radial-gradient(circle at 1px 1px, rgba(255,255,255,0.05) 1px, transparent 0)',
+                      backgroundImage: isDark
+                        ? 'radial-gradient(circle at 1px 1px, rgba(255,255,255,0.05) 1px, transparent 0)'
+                        : 'radial-gradient(circle at 1px 1px, rgba(99,102,241,0.08) 1px, transparent 0)',
                       backgroundSize: '24px 24px'
                     }}></div>
 
@@ -324,8 +328,8 @@ const Hero: React.FC = () => {
                         <ScanFace size={28} className="md:size-8 text-white" />
                       </div>
                       <div className="text-center px-2">
-                        <span className="block text-base md:text-lg font-bold text-white">Enable Camera</span>
-                        <span className="text-xs md:text-sm text-slate-400">to try live analysis</span>
+                        <span className={`block text-base md:text-lg font-bold ${isDark ? 'text-white' : 'text-slate-800'}`}>Enable Camera</span>
+                        <span className={`text-xs md:text-sm ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>to try live analysis</span>
                       </div>
                     </button>
                     <div className="absolute bottom-4 md:bottom-8 text-[10px] md:text-xs text-slate-500 flex items-center gap-1.5 px-2">
@@ -364,11 +368,11 @@ const Hero: React.FC = () => {
             </div>
 
             {/* Right: Analysis Panel */}
-            <div className="w-full md:w-80 bg-slate-900/50 p-6 flex flex-col gap-6 backdrop-blur-sm">
+            <div className={`w-full md:w-80 p-6 flex flex-col gap-6 backdrop-blur-sm ${isDark ? 'bg-slate-900/50' : 'bg-slate-50/80'}`}>
 
               {/* Scores */}
               <div className="space-y-5">
-                <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider flex items-center gap-2">
+                <h3 className={`text-xs font-bold uppercase tracking-wider flex items-center gap-2 ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
                   <div className="w-1.5 h-1.5 rounded-full bg-indigo-500"></div>
                   Live Metrics
                 </h3>
@@ -376,11 +380,11 @@ const Hero: React.FC = () => {
                 <div className="space-y-4">
                   {/* Confidence Metric */}
                   <div className="space-y-1.5">
-                    <div className="flex justify-between text-sm text-slate-300">
+                    <div className={`flex justify-between text-sm ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>
                       <span>Confidence</span>
                       <span className="text-green-400 font-mono">{Math.round(metrics.confidence)}%</span>
                     </div>
-                    <div className="h-1.5 bg-slate-800 rounded-full overflow-hidden">
+                    <div className={`h-1.5 rounded-full overflow-hidden ${isDark ? 'bg-slate-800' : 'bg-slate-200'}`}>
                       <motion.div
                         className="h-full bg-green-500 rounded-full"
                         animate={{ width: `${metrics.confidence}%` }}
@@ -391,11 +395,11 @@ const Hero: React.FC = () => {
 
                   {/* Technical Depth Metric */}
                   <div className="space-y-1.5">
-                    <div className="flex justify-between text-sm text-slate-300">
+                    <div className={`flex justify-between text-sm ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>
                       <span>Technical Depth</span>
                       <span className="text-indigo-400 font-mono">{Math.round(metrics.technical)}%</span>
                     </div>
-                    <div className="h-1.5 bg-slate-800 rounded-full overflow-hidden">
+                    <div className={`h-1.5 rounded-full overflow-hidden ${isDark ? 'bg-slate-800' : 'bg-slate-200'}`}>
                       <motion.div
                         className="h-full bg-indigo-500 rounded-full"
                         animate={{ width: `${metrics.technical}%` }}
@@ -406,13 +410,13 @@ const Hero: React.FC = () => {
 
                   {/* Pacing Metric */}
                   <div className="space-y-1.5">
-                    <div className="flex justify-between text-sm text-slate-300">
+                    <div className={`flex justify-between text-sm ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>
                       <span>Pacing</span>
                       <span className={`font-mono transition-colors duration-300 ${getPacingColor(metrics.pacing)}`}>
                         {getPacingLabel(metrics.pacing)}
                       </span>
                     </div>
-                    <div className="h-1.5 bg-slate-800 rounded-full overflow-hidden">
+                    <div className={`h-1.5 rounded-full overflow-hidden ${isDark ? 'bg-slate-800' : 'bg-slate-200'}`}>
                       <motion.div
                         className={`h-full rounded-full transition-colors duration-300 ${getPacingBarColor(metrics.pacing)}`}
                         animate={{ width: `${metrics.pacing}%` }}
@@ -424,12 +428,12 @@ const Hero: React.FC = () => {
               </div>
 
               {/* Transcript Snippet */}
-              <div className="flex-1 overflow-hidden flex flex-col pt-2 border-t border-slate-800/50">
-                <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3 flex items-center gap-2">
-                  <div className="w-1.5 h-1.5 rounded-full bg-slate-500"></div>
+              <div className={`flex-1 overflow-hidden flex flex-col pt-2 border-t ${isDark ? 'border-slate-800/50' : 'border-slate-200'}`}>
+                <h3 className={`text-xs font-bold uppercase tracking-wider mb-3 flex items-center gap-2 ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
+                  <div className={`w-1.5 h-1.5 rounded-full ${isDark ? 'bg-slate-500' : 'bg-slate-400'}`}></div>
                   Transcript
                 </h3>
-                <div className="flex-1 bg-slate-950/30 rounded-lg p-3 text-xs text-slate-400 font-mono leading-relaxed overflow-y-auto border border-slate-800/50 scrollbar-thin scrollbar-thumb-slate-800 relative">
+                <div className={`flex-1 rounded-lg p-3 text-xs font-mono leading-relaxed overflow-y-auto border scrollbar-thin relative ${isDark ? 'bg-slate-950/30 text-slate-400 border-slate-800/50 scrollbar-thumb-slate-800' : 'bg-white text-slate-600 border-slate-200 scrollbar-thumb-slate-300'}`}>
                   {!isLive && (
                     <div className="absolute inset-0 flex items-center justify-center text-slate-600 italic">
                       Start camera to analyze speech...

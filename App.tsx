@@ -1,4 +1,5 @@
 import React from 'react';
+import { ThemeProvider } from './components/ThemeContext';
 import Navbar from './components/Navbar';
 import Hero from './components/sections/Hero';
 import WhoItsFor from './components/sections/WhoItsFor';
@@ -14,24 +15,26 @@ import CustomCursor from './components/ui/CustomCursor';
 
 const App: React.FC = () => {
   return (
-    <div className="relative min-h-screen bg-slate-950 text-slate-50 overflow-x-hidden selection:bg-indigo-500/30 selection:text-indigo-200">
-      <NeuralBackground />
-      <CustomCursor />
-      <div className="relative z-10">
-        <Navbar />
-        <main>
-          <Hero />
-          <WhoItsFor />
-          <Features />
-          <HowItWorks />
-          <LiveDemo />
-          <Pricing />
-          <FAQ />
-          <FinalCTA />
-        </main>
-        <Footer />
+    <ThemeProvider>
+      <div className="relative min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-50 overflow-x-hidden selection:bg-indigo-500/30 selection:text-indigo-200 dark:selection:text-indigo-200">
+        <NeuralBackground />
+        <CustomCursor />
+        <div className="relative z-10">
+          <Navbar />
+          <main>
+            <Hero />
+            <WhoItsFor />
+            <Features />
+            <HowItWorks />
+            <LiveDemo />
+            <Pricing />
+            <FAQ />
+            <FinalCTA />
+          </main>
+          <Footer />
+        </div>
       </div>
-    </div>
+    </ThemeProvider>
   );
 };
 

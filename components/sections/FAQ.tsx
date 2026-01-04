@@ -2,18 +2,19 @@ import React, { useState } from 'react';
 import { Plus, Minus } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import FadeIn from '../ui/FadeIn';
+import { useTheme } from '../ThemeContext';
 
-const FAQItem: React.FC<{ question: string, answer: string }> = ({ question, answer }) => {
+const FAQItem: React.FC<{ question: string, answer: string, isDark: boolean }> = ({ question, answer, isDark }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div className="border-b border-slate-800">
+    <div className={`border-b ${isDark ? 'border-slate-800' : 'border-slate-200'}`}>
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full py-6 flex items-center justify-between text-left hover:text-indigo-400 transition-colors"
+        className={`w-full py-6 flex items-center justify-between text-left transition-colors ${isDark ? 'hover:text-indigo-400' : 'hover:text-indigo-600'}`}
       >
-        <span className="text-lg font-medium text-slate-200">{question}</span>
-        <span className="text-slate-500">
+        <span className={`text-lg font-medium ${isDark ? 'text-slate-200' : 'text-slate-800'}`}>{question}</span>
+        <span className={isDark ? 'text-slate-500' : 'text-slate-400'}>
           {isOpen ? <Minus size={20} /> : <Plus size={20} />}
         </span>
       </button>
@@ -25,7 +26,7 @@ const FAQItem: React.FC<{ question: string, answer: string }> = ({ question, ans
             exit={{ height: 0, opacity: 0 }}
             className="overflow-hidden"
           >
-            <p className="pb-6 text-slate-400 leading-relaxed">
+            <p className={`pb-6 leading-relaxed ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
               {answer}
             </p>
           </motion.div>
@@ -37,6 +38,8 @@ const FAQItem: React.FC<{ question: string, answer: string }> = ({ question, ans
 
 const FAQ: React.FC = () => {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const { isDark } = useTheme();
+
   const faqs = [
     {
       question: "Is Interview Expert suitable for first-time job seekers?",
@@ -57,20 +60,20 @@ const FAQ: React.FC = () => {
   ];
 
   return (
-    <section id="faq" className="py-24 bg-slate-950/40 backdrop-blur-sm">
+    <section id="faq" className={`py-24 backdrop-blur-sm ${isDark ? 'bg-slate-950/40' : 'bg-slate-50'}`}>
       <div className="container mx-auto px-4 max-w-3xl">
         <div className="text-center mb-16">
           <FadeIn>
-            <h2 className="text-3xl md:text-5xl font-display font-bold text-white mb-4">Frequently asked questions</h2>
+            <h2 className={`text-3xl md:text-5xl font-display font-bold mb-4 ${isDark ? 'text-white' : 'text-slate-900'}`}>Frequently asked questions</h2>
           </FadeIn>
           <FadeIn delay={0.2}>
-            <p className="text-slate-400 max-w-2xl mx-auto">Everything you need to know about Interview Expert.</p>
+            <p className={`max-w-2xl mx-auto ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>Everything you need to know about Interview Expert.</p>
           </FadeIn>
         </div>
         <div className="flex flex-col space-y-4">
           {faqs.map((faq, index) => (
             <FadeIn key={index} delay={index * 0.1}>
-              <FAQItem question={faq.question} answer={faq.answer} />
+              <FAQItem question={faq.question} answer={faq.answer} isDark={isDark} />
             </FadeIn>
           ))}
         </div>

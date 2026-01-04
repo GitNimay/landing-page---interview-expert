@@ -2,6 +2,7 @@
 import React from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { cn } from "../../lib/utils";
+import { useTheme } from "../ThemeContext";
 
 export const Cover = ({
     children,
@@ -11,6 +12,7 @@ export const Cover = ({
     className?: string;
 }) => {
     const [hovered, setHovered] = React.useState(false);
+    const { isDark } = useTheme();
 
     const ref = React.useRef<HTMLDivElement>(null);
 
@@ -20,7 +22,10 @@ export const Cover = ({
             onMouseLeave={() => setHovered(false)}
             onClick={() => setHovered(!hovered)}
             ref={ref}
-            className="relative hover:bg-neutral-900 group/cover inline-block dark:bg-neutral-900 bg-neutral-100 px-2 py-2  transition duration-200 rounded-sm cursor-pointer"
+            className={`relative group/cover inline-block px-2 py-2 transition duration-200 rounded-sm cursor-pointer ${isDark
+                    ? 'bg-neutral-900 hover:bg-neutral-800'
+                    : 'bg-indigo-50 hover:bg-indigo-100'
+                }`}
         >
             <AnimatePresence>
                 {hovered && (
@@ -28,18 +33,18 @@ export const Cover = ({
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
-                        className="h-full w-full absolute inset-0 dark:bg-neutral-800 bg-neutral-200 opacity-50 z-0"
+                        className={`h-full w-full absolute inset-0 opacity-50 z-0 ${isDark ? 'bg-neutral-800' : 'bg-indigo-100'}`}
                     />
                 )}
             </AnimatePresence>
             <div className="relative z-10 flex items-center gap-2">
                 {children}
-                <Sparkles />
+                <Sparkles isDark={isDark} />
             </div>
             <motion.span
                 initial={{ y: 0, opacity: 1 }}
                 animate={{ y: hovered ? -10 : 0, opacity: hovered ? 0 : 1 }}
-                className="text-neutral-500 dark:text-neutral-400 text-sm absolute right-0 bottom-0 translate-y-full opacity-0 group-hover/cover:opacity-100 transition duration-200"
+                className={`text-sm absolute right-0 bottom-0 translate-y-full opacity-0 group-hover/cover:opacity-100 transition duration-200 ${isDark ? 'text-neutral-400' : 'text-neutral-500'}`}
             >
 
             </motion.span>
@@ -87,7 +92,7 @@ const Beam = ({
     );
 };
 
-const Sparkles = () => {
+const Sparkles = ({ isDark }: { isDark: boolean }) => {
     return (
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
             <motion.div
@@ -99,8 +104,9 @@ const Sparkles = () => {
                     duration: 2,
                     repeat: Infinity,
                 }}
-                className="w-full h-full bg-gradient-to-r from-indigo-500/20 to-purple-500/20 blur-xl"
+                className={`w-full h-full blur-xl ${isDark ? 'bg-gradient-to-r from-indigo-500/20 to-purple-500/20' : 'bg-gradient-to-r from-indigo-400/30 to-purple-400/30'}`}
             />
         </div>
     )
 }
+

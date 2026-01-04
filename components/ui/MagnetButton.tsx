@@ -1,5 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { motion } from 'framer-motion';
+import { useTheme } from '../ThemeContext';
 
 interface MagnetButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode;
@@ -7,14 +8,15 @@ interface MagnetButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement
   className?: string;
 }
 
-const MagnetButton: React.FC<MagnetButtonProps> = ({ 
-  children, 
-  variant = 'primary', 
-  className = '', 
-  ...props 
+const MagnetButton: React.FC<MagnetButtonProps> = ({
+  children,
+  variant = 'primary',
+  className = '',
+  ...props
 }) => {
   const ref = useRef<HTMLButtonElement>(null);
   const [position, setPosition] = useState({ x: 0, y: 0 });
+  const { isDark } = useTheme();
 
   const handleMouseMove = (e: React.MouseEvent<HTMLButtonElement>) => {
     const { clientX, clientY } = e;
@@ -29,11 +31,17 @@ const MagnetButton: React.FC<MagnetButtonProps> = ({
   };
 
   const baseStyles = "relative px-6 py-3 rounded-full font-medium transition-colors duration-300 flex items-center justify-center gap-2 text-sm md:text-base";
-  
+
   const variants = {
-    primary: "bg-white text-black hover:bg-gray-100 shadow-[0_0_20px_rgba(255,255,255,0.3)] border border-transparent",
-    secondary: "bg-transparent text-white border border-slate-700 hover:bg-slate-800 hover:border-slate-500",
-    ghost: "bg-transparent text-slate-300 hover:text-white"
+    primary: isDark
+      ? "bg-white text-black hover:bg-gray-100 shadow-[0_0_20px_rgba(255,255,255,0.3)] border border-transparent"
+      : "bg-slate-900 text-white hover:bg-slate-800 shadow-[0_0_20px_rgba(0,0,0,0.15)] border border-transparent",
+    secondary: isDark
+      ? "bg-transparent text-white border border-slate-700 hover:bg-slate-800 hover:border-slate-500"
+      : "bg-transparent text-slate-900 border border-slate-300 hover:bg-slate-100 hover:border-slate-400",
+    ghost: isDark
+      ? "bg-transparent text-slate-300 hover:text-white"
+      : "bg-transparent text-slate-600 hover:text-slate-900"
   };
 
   return (

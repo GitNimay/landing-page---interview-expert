@@ -2,6 +2,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { cn } from "../../lib/utils";
+import { useTheme } from "../ThemeContext";
 
 export const SparklesText = ({
     text,
@@ -14,6 +15,8 @@ export const SparklesText = ({
     className?: string;
     sparklesCount?: number;
 }) => {
+    const { isDark } = useTheme();
+
     return (
         <div
             className={cn(
@@ -26,10 +29,18 @@ export const SparklesText = ({
                     initial={{ opacity: 0, scale: 0.5, filter: "blur(10px)" }}
                     whileInView={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
                     transition={{ duration: 0.8, ease: "easeOut" }}
-                    className="relative z-10 block text-transparent bg-clip-text bg-gradient-to-r from-indigo-300 via-white to-indigo-300"
+                    className={`relative z-10 block text-transparent bg-clip-text bg-gradient-to-r ${isDark
+                        ? 'from-indigo-300 via-white to-indigo-300'
+                        : 'from-indigo-600 via-slate-800 to-indigo-600'
+                        }`}
                 >
                     {text}
                 </motion.span>
+
+                {/* Spotlight beam effect */}
+                <div className="absolute inset-0 opacity-0 animate-spotlight-beam">
+                    <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] blur-[100px] rounded-full mix-blend-screen filter ${isDark ? 'bg-indigo-500/20' : 'bg-indigo-300/30'}`}></div>
+                </div>
 
                 {/* Sparkles */}
                 {Array.from({ length: sparklesCount }).map((_, i) => (
@@ -44,7 +55,7 @@ export const SparklesText = ({
     );
 };
 
-const Sparkle = ({ color, delay }: { color: string; delay: number }) => {
+const Sparkle: React.FC<{ color: string; delay: number }> = ({ color, delay }) => {
     return (
         <motion.span
             initial={{ opacity: 0, scale: 0 }}
@@ -81,3 +92,4 @@ const Sparkle = ({ color, delay }: { color: string; delay: number }) => {
         </motion.span>
     );
 };
+

@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { Activity, BarChart3, MessageSquareText, FileText, LineChart, Users, Brain, ShieldCheck } from 'lucide-react';
 import FadeIn from '../ui/FadeIn';
 import { SparklesText } from '../ui/SparklesText';
+import { useTheme } from '../ThemeContext';
 
 const cn = (...classes: (string | undefined | null | false)[]) => {
   return classes.filter(Boolean).join(" ");
@@ -13,16 +14,19 @@ const Feature = ({
   description,
   icon,
   index,
+  isDark,
 }: {
   title: string;
   description: string;
   icon: React.ReactNode;
   index: number;
+  isDark: boolean;
 }) => {
   return (
     <div
       className={cn(
-        "flex flex-col py-10 relative group/feature border-slate-800",
+        "flex flex-col py-10 relative group/feature",
+        isDark ? "border-slate-800" : "border-slate-200",
         "border-b lg:border-b-0", // Mobile: border-b. Desktop: reset default border-b logic
         "lg:border-r", // Desktop: default right border
         (index === 0 || index === 4) && "lg:border-l", // Desktop: Left border for first column
@@ -30,23 +34,23 @@ const Feature = ({
       )}
     >
       {/* Hover Gradient Background */}
-      <div className="opacity-0 group-hover/feature:opacity-100 transition duration-200 absolute inset-0 h-full w-full bg-gradient-to-b from-indigo-500/5 to-transparent pointer-events-none" />
+      <div className={`opacity-0 group-hover/feature:opacity-100 transition duration-200 absolute inset-0 h-full w-full pointer-events-none ${isDark ? 'bg-gradient-to-b from-indigo-500/5 to-transparent' : 'bg-gradient-to-b from-indigo-100/50 to-transparent'}`} />
 
       {/* Icon */}
-      <div className="mb-4 relative z-10 px-10 text-slate-400 group-hover/feature:text-indigo-400 transition-colors duration-200">
+      <div className={`mb-4 relative z-10 px-10 transition-colors duration-200 ${isDark ? 'text-slate-400 group-hover/feature:text-indigo-400' : 'text-slate-500 group-hover/feature:text-indigo-600'}`}>
         {icon}
       </div>
 
       {/* Title with sliding accent */}
       <div className="text-lg font-bold mb-2 relative z-10 px-10">
-        <div className="absolute left-0 inset-y-0 h-6 group-hover/feature:h-8 w-1 rounded-tr-full rounded-br-full bg-slate-700 group-hover/feature:bg-indigo-500 transition-all duration-200 origin-center" />
-        <span className="group-hover/feature:translate-x-2 transition duration-200 inline-block text-slate-100">
+        <div className={`absolute left-0 inset-y-0 h-6 group-hover/feature:h-8 w-1 rounded-tr-full rounded-br-full transition-all duration-200 origin-center ${isDark ? 'bg-slate-700 group-hover/feature:bg-indigo-500' : 'bg-slate-300 group-hover/feature:bg-indigo-500'}`} />
+        <span className={`group-hover/feature:translate-x-2 transition duration-200 inline-block ${isDark ? 'text-slate-100' : 'text-slate-800'}`}>
           {title}
         </span>
       </div>
 
       {/* Description */}
-      <p className="text-sm text-slate-400 max-w-xs relative z-10 px-10 leading-relaxed">
+      <p className={`text-sm max-w-xs relative z-10 px-10 leading-relaxed ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
         {description}
       </p>
     </div>
@@ -54,6 +58,8 @@ const Feature = ({
 };
 
 const Features: React.FC = () => {
+  const { isDark } = useTheme();
+
   const features = [
     {
       title: "Real-time analysis",
@@ -104,18 +110,18 @@ const Features: React.FC = () => {
           <FadeIn>
             <SparklesText
               text="Everything you need to master the interview"
-              className="text-2xl md:text-5xl font-display font-bold text-white mb-4"
+              className={`text-2xl md:text-5xl font-display font-bold mb-4 ${isDark ? 'text-white' : 'text-slate-900'}`}
             />
           </FadeIn>
           <FadeIn delay={0.2}>
-            <p className="text-slate-400 max-w-2xl mx-auto">Our AI-powered platform provides comprehensive tools to help you prepare, practice, and perfect your interview skills.</p>
+            <p className={`max-w-2xl mx-auto ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>Our AI-powered platform provides comprehensive tools to help you prepare, practice, and perfect your interview skills.</p>
           </FadeIn>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 relative z-10 max-w-7xl mx-auto">
           {features.map((feature, index) => (
             <FadeIn key={feature.title} delay={index * 0.1} className="h-full">
-              <Feature {...feature} index={index} />
+              <Feature {...feature} index={index} isDark={isDark} />
             </FadeIn>
           ))}
         </div>

@@ -1,8 +1,10 @@
 import React, { useEffect, useRef } from 'react';
+import { useTheme } from '../ThemeContext';
 
 const NeuralBackground: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const mouseRef = useRef({ x: 0, y: 0 });
+  const { isDark } = useTheme();
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -47,9 +49,30 @@ const NeuralBackground: React.FC = () => {
       });
     }
 
+    // Theme-based colors
+    const getColors = () => {
+      if (isDark) {
+        return {
+          background: 'rgba(2, 6, 23, 0.2)', // slate-950
+          particle: 'rgba(99, 102, 241, 0.5)', // Indigo-500
+          connection: (opacity: number) => `rgba(139, 92, 246, ${opacity * 0.2})`, // Violet-500
+          mouseConnection: (opacity: number) => `rgba(20, 184, 166, ${opacity * 0.25})`, // Teal-500
+        };
+      } else {
+        return {
+          background: 'rgba(248, 250, 252, 0.3)', // slate-50
+          particle: 'rgba(99, 102, 241, 0.4)', // Indigo-500 (slightly transparent)
+          connection: (opacity: number) => `rgba(129, 140, 248, ${opacity * 0.25})`, // Indigo-400
+          mouseConnection: (opacity: number) => `rgba(20, 184, 166, ${opacity * 0.3})`, // Teal-500
+        };
+      }
+    };
+
     const draw = () => {
+      const colors = getColors();
+
       // Create a trail effect by not clearing completely
-      ctx.fillStyle = 'rgba(2, 6, 23, 0.2)'; // matching bg-slate-950 with opacity
+      ctx.fillStyle = colors.background;
       ctx.fillRect(0, 0, width, height);
 
       particles.forEach((p, i) => {
@@ -66,27 +89,27 @@ const NeuralBackground: React.FC = () => {
         const distMouse = Math.sqrt(dxMouse * dxMouse + dyMouse * dyMouse);
 
         if (distMouse < mouseDistance) {
-            const forceDirectionX = dxMouse / distMouse;
-            const forceDirectionY = dyMouse / distMouse;
-            const force = (mouseDistance - distMouse) / mouseDistance;
-            
-            // Gentle repulsion
-            p.vx += forceDirectionX * force * 0.02;
-            p.vy += forceDirectionY * force * 0.02;
+          const forceDirectionX = dxMouse / distMouse;
+          const forceDirectionY = dyMouse / distMouse;
+          const force = (mouseDistance - distMouse) / mouseDistance;
+
+          // Gentle repulsion
+          p.vx += forceDirectionX * force * 0.02;
+          p.vy += forceDirectionY * force * 0.02;
         }
 
         // Speed limit
         const speed = Math.sqrt(p.vx * p.vx + p.vy * p.vy);
         const maxSpeed = 1.5;
         if (speed > maxSpeed) {
-            p.vx = (p.vx / speed) * maxSpeed;
-            p.vy = (p.vy / speed) * maxSpeed;
+          p.vx = (p.vx / speed) * maxSpeed;
+          p.vy = (p.vy / speed) * maxSpeed;
         }
 
         // Draw particle
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-        ctx.fillStyle = 'rgba(99, 102, 241, 0.5)'; // Indigo-500
+        ctx.fillStyle = colors.particle;
         ctx.fill();
 
         // Connect particles
@@ -99,23 +122,23 @@ const NeuralBackground: React.FC = () => {
           if (dist < connectionDistance) {
             ctx.beginPath();
             const opacity = 1 - dist / connectionDistance;
-            ctx.strokeStyle = `rgba(139, 92, 246, ${opacity * 0.2})`; // Violet-500
+            ctx.strokeStyle = colors.connection(opacity);
             ctx.lineWidth = 1;
             ctx.moveTo(p.x, p.y);
             ctx.lineTo(p2.x, p2.y);
             ctx.stroke();
           }
         }
-        
+
         // Connect to mouse
         if (distMouse < mouseDistance) {
-            ctx.beginPath();
-            const opacity = 1 - distMouse / mouseDistance;
-            ctx.strokeStyle = `rgba(20, 184, 166, ${opacity * 0.25})`; // Teal-500
-            ctx.lineWidth = 1;
-            ctx.moveTo(p.x, p.y);
-            ctx.lineTo(mouseRef.current.x, mouseRef.current.y);
-            ctx.stroke();
+          ctx.beginPath();
+          const opacity = 1 - distMouse / mouseDistance;
+          ctx.strokeStyle = colors.mouseConnection(opacity);
+          ctx.lineWidth = 1;
+          ctx.moveTo(p.x, p.y);
+          ctx.lineTo(mouseRef.current.x, mouseRef.current.y);
+          ctx.stroke();
         }
       });
 
@@ -129,12 +152,12 @@ const NeuralBackground: React.FC = () => {
       window.removeEventListener('mousemove', handleMouseMove);
       cancelAnimationFrame(animationId);
     };
-  }, []);
+  }, [isDark]);
 
   return (
     <canvas
       ref={canvasRef}
-      className="fixed inset-0 z-0 pointer-events-none bg-slate-950"
+      className={`fixed inset-0 z-0 pointer-events-none ${isDark ? 'bg-slate-950' : 'bg-slate-50'}`}
     />
   );
 };

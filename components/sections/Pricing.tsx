@@ -3,8 +3,11 @@ import { motion } from 'framer-motion';
 import MagnetButton from '../ui/MagnetButton';
 import FadeIn from '../ui/FadeIn';
 import { Check, X } from 'lucide-react';
+import { useTheme } from '../ThemeContext';
 
 const Pricing: React.FC = () => {
+  const { isDark } = useTheme();
+
   const plans = [
     {
       name: "Starter",
@@ -40,10 +43,10 @@ const Pricing: React.FC = () => {
       <div className="container mx-auto px-4 relative z-10">
         <div className="text-center mb-16">
           <FadeIn>
-            <h2 className="text-3xl md:text-5xl font-display font-bold text-white mb-4">Simple, transparent pricing</h2>
+            <h2 className={`text-3xl md:text-5xl font-display font-bold mb-4 ${isDark ? 'text-white' : 'text-slate-900'}`}>Simple, transparent pricing</h2>
           </FadeIn>
           <FadeIn delay={0.2}>
-            <p className="text-slate-400 max-w-2xl mx-auto">Start for free, upgrade when you need more power.</p>
+            <p className={`max-w-2xl mx-auto ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>Start for free, upgrade when you need more power.</p>
           </FadeIn>
         </div>
 
@@ -55,8 +58,12 @@ const Pricing: React.FC = () => {
                 className={`
                   relative p-8 rounded-2xl border flex flex-col h-full backdrop-blur-md
                   ${plan.featured
-                    ? 'bg-slate-900/80 border-indigo-500/50 shadow-2xl shadow-indigo-500/10'
-                    : 'bg-slate-950/50 border-slate-800'
+                    ? isDark
+                      ? 'bg-slate-900/80 border-indigo-500/50 shadow-2xl shadow-indigo-500/10'
+                      : 'bg-gradient-to-b from-indigo-50 to-white border-indigo-300 shadow-xl shadow-indigo-100'
+                    : isDark
+                      ? 'bg-slate-950/50 border-slate-800'
+                      : 'bg-white border-slate-200 shadow-lg'
                   }
                 `}
               >
@@ -67,18 +74,18 @@ const Pricing: React.FC = () => {
                 )}
 
                 <div className="mb-8">
-                  <h3 className="text-xl font-bold text-white mb-2">{plan.name}</h3>
+                  <h3 className={`text-xl font-bold mb-2 ${isDark ? 'text-white' : 'text-slate-900'}`}>{plan.name}</h3>
                   <div className="flex items-baseline gap-1 mb-4">
-                    <span className="text-4xl font-display font-bold text-white">{plan.price}</span>
-                    {plan.price !== "Free" && <span className="text-slate-400">{plan.period}</span>}
+                    <span className={`text-4xl font-display font-bold ${isDark ? 'text-white' : 'text-slate-900'}`}>{plan.price}</span>
+                    {plan.price !== "Free" && <span className={isDark ? 'text-slate-400' : 'text-slate-500'}>{plan.period}</span>}
                   </div>
-                  <p className="text-slate-400 text-sm">{plan.target}</p>
+                  <p className={`text-sm ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>{plan.target}</p>
                 </div>
 
                 <ul className="space-y-4 mb-8 flex-1">
                   {plan.features.map((feature, i) => (
-                    <li key={i} className="flex items-start gap-3 text-sm text-slate-300">
-                      <Check className={`shrink-0 mt-0.5 ${plan.featured ? 'text-indigo-400' : 'text-slate-500'}`} size={16} />
+                    <li key={i} className={`flex items-start gap-3 text-sm ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
+                      <Check className={`shrink-0 mt-0.5 ${plan.featured ? 'text-indigo-400' : isDark ? 'text-slate-500' : 'text-slate-400'}`} size={16} />
                       <span>{feature}</span>
                     </li>
                   ))}
@@ -95,7 +102,7 @@ const Pricing: React.FC = () => {
           ))}
         </div>
 
-        <p className="text-center text-slate-500 text-sm mt-12">
+        <p className={`text-center text-sm mt-12 ${isDark ? 'text-slate-500' : 'text-slate-500'}`}>
           Custom enterprise plans available on request.
         </p>
       </div>
