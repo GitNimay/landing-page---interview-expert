@@ -78,10 +78,12 @@ const Navbar: React.FC = () => {
                 {isDark ? <Sun size={18} /> : <Moon size={18} />}
               </motion.div>
             </button>
-            <a href="https://interviewxpert-ai.netlify.app/" className={`text-sm font-medium ${isDark ? 'text-slate-300 hover:text-white' : 'text-slate-600 hover:text-slate-900'}`}>Log in</a>
-            <MagnetButton variant="primary" className="!px-4 !py-2 !text-sm">
-              Get Started
-            </MagnetButton>
+            <a href="https://interview-xpert-gold.vercel.app/" className={`text-sm font-medium ${isDark ? 'text-slate-300 hover:text-white' : 'text-slate-600 hover:text-slate-900'}`}>Log in</a>
+            <a href="https://interview-xpert-gold.vercel.app/">
+              <MagnetButton variant="primary" className="!px-4 !py-2 !text-sm">
+                Get Started
+              </MagnetButton>
+            </a>
           </div>
 
           {/* Mobile Menu Toggle */}
@@ -127,10 +129,12 @@ const Navbar: React.FC = () => {
               </a>
             ))}
             <div className={`h-px my-4 ${isDark ? 'bg-slate-800' : 'bg-slate-200'}`} />
-            <a href="https://interviewxpert-ai.netlify.app/" className={`text-xl font-medium ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>Log in</a>
-            <MagnetButton variant="primary" className="w-full justify-center">
-              Get Started
-            </MagnetButton>
+            <a href="https://interview-xpert-gold.vercel.app/" className={`text-xl font-medium ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>Log in</a>
+            <a href="https://interview-xpert-gold.vercel.app/">
+              <MagnetButton variant="primary" className="w-full justify-center">
+                Get Started
+              </MagnetButton>
+            </a>
           </div>
         </motion.div>
       )}

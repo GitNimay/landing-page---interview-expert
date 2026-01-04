@@ -254,9 +254,11 @@ const Hero: React.FC = () => {
         {/* CTAs */}
         <FadeIn delay={0.5}>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
-            <MagnetButton variant="primary">
-              Start Free Trial
-            </MagnetButton>
+            <a href="https://interview-xpert-gold.vercel.app/">
+              <MagnetButton variant="primary">
+                Start Free Trial
+              </MagnetButton>
+            </a>
           </div>
         </FadeIn>
 

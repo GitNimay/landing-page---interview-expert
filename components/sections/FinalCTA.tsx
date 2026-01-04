@@ -27,12 +27,14 @@ const FinalCTA: React.FC = () => {
         </FadeIn>
         <FadeIn delay={0.4}>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <MagnetButton className="px-8 py-4 text-lg min-w-[200px] justify-center">
-              Get Started Free
-            </MagnetButton>
-            <button className={`px-8 py-4 rounded-full font-medium transition-colors ${isDark ? 'text-slate-300 hover:text-white' : 'text-slate-600 hover:text-slate-900'}`}>
+            <a href="https://interview-xpert-gold.vercel.app/">
+              <MagnetButton className="px-8 py-4 text-lg min-w-[200px] justify-center">
+                Get Started Free
+              </MagnetButton>
+            </a>
+            <a href="https://interview-xpert-gold.vercel.app/" className={`px-8 py-4 rounded-full font-medium transition-colors ${isDark ? 'text-slate-300 hover:text-white' : 'text-slate-600 hover:text-slate-900'}`}>
               Schedule Demo
-            </button>
+            </a>
           </div>
         </FadeIn>
       </div>
